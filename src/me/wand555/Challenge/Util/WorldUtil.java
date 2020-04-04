@@ -23,8 +23,13 @@ import org.bukkit.inventory.ItemStack;
 
 import me.wand555.Challenge.Challenge.Challenge;
 import me.wand555.Challenge.Challenge.ChallengeProfile;
+import me.wand555.Challenge.Challenge.PositionManager;
 import me.wand555.Challenge.Challenge.WorldLinkManager;
+import me.wand555.Challenge.Challenge.EndLinking.EndHelper;
+import me.wand555.Challenge.Challenge.EndLinking.ObsidianPlatform;
 import me.wand555.Challenge.Config.ConfigUtil;
+import me.wand555.Challenge.NetherLinking.Gate;
+import me.wand555.Challenge.NetherLinking.LocationHelper;
 import net.minecraft.server.v1_15_R1.Material;
 
 public class WorldUtil extends ConfigUtil {
@@ -154,7 +159,14 @@ public class WorldUtil extends ConfigUtil {
 		WorldLinkManager.worlds.stream().forEach(w -> Bukkit.unloadWorld(w, false));
 	}
 	
+	public static void deletePositionData() {
+		new File(PLUGIN.getDataFolder()+"", "positions.yml").delete();
+		PositionManager.positions.clear();
+	}
+	
 	public static void deletePortalData() {
+		Gate.getGates().clear();
+		EndHelper.reset();
 		new File(PLUGIN.getDataFolder()+"", "netherportals.yml").delete();
 		new File(PLUGIN.getDataFolder()+"", "endportals.yml").delete();
 	}

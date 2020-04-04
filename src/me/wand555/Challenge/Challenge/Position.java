@@ -20,6 +20,13 @@ public class Position {
 		this.date = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy").format(date);
 	}
 	
+	public Position(String name, Location location, UUID creator, String date) {
+		this.name = name;
+		this.location = location;
+		this.creator = creator;
+		this.date = date;
+	}
+	
 	/**
 	 * @return the name
 	 */

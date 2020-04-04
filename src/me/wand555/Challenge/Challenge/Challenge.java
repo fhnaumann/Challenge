@@ -68,6 +68,7 @@ public class Challenge extends JavaPlugin {
 		this.getCommand("timer").setExecutor(myCE);
 		this.getCommand("hp").setExecutor(myCE);
 		this.getCommand("settings").setExecutor(myCE);
+		this.getCommand("pos").setExecutor(myCE);
 		
 		if(Settings.hasStarted) {
 			//ChallengeProfile.resumeTimer();
@@ -75,7 +76,7 @@ public class Challenge extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		System.out.println(Settings.hasStarted);
+		System.out.println("ON DISABLE SHAREDHP: " + Settings.sharedHP);
 		if(!Settings.isPaused && Settings.hasStarted) {
 			ChallengeProfile.pauseTimerOnDisable();
 		}

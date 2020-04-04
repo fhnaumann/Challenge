@@ -18,6 +18,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import me.wand555.Challenge.Challenge.Challenge;
 import me.wand555.Challenge.Challenge.ChallengeProfile;
+import me.wand555.Challenge.Challenge.Position;
+import me.wand555.Challenge.Challenge.PositionManager;
 import me.wand555.Challenge.Challenge.Settings;
 import me.wand555.Challenge.Challenge.EndLinking.ObsidianPlatform;
 import me.wand555.Challenge.NetherLinking.Gate;
@@ -30,12 +32,39 @@ public class ConfigHandler extends ConfigUtil {
 		storeNetherPortalToConfig();
 		storeEndPortalToConfig();
 		storeChallengeProfilesAndTimers();
+		storePositionsToConfig();
 	}
 	
 	public static void loadFromConfig() {
 		loadNetherPortalFromConfig();
 		loadEndPortalFromConfig();
 		loadChallengeProfilesAndTimers();
+		loadPositionsFromConfig();
+	}
+	
+	private static void loadPositionsFromConfig() {
+		checkOrdner();
+		File file = new File(PLUGIN.getDataFolder()+"", "positions.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		for(String name : cfg.getKeys(false)) {
+			PositionManager.addToPosition(new Position(
+					name, 
+					deserializeLocation(cfg.getString(name+".Location")), 
+					UUID.fromString(cfg.getString(name+".Creator").trim()), 
+					cfg.getString(name+".Date")));
+		}
+	}
+	
+	private static void storePositionsToConfig() {
+		clearFile("positions.yml");
+		File file = new File(PLUGIN.getDataFolder()+"", "positions.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		for(Position pos : PositionManager.positions) {
+			cfg.set(pos.getName()+".Location", serializeLocation(pos.getLocation()));
+			cfg.set(pos.getName()+".Creator", pos.getCreator().toString());
+			cfg.set(pos.getName()+".Date", pos.getDate());
+		}
+		saveCustomYml(cfg, file);
 	}
 	
 	private static void loadChallengeProfilesAndTimers() {
@@ -47,22 +76,24 @@ public class ConfigHandler extends ConfigUtil {
 				.collect(Collectors.toCollection(HashSet::new)));
 		//has to be done this way, because I need a new instance, but the timer shouldnt continue.
 		System.out.println(ChallengeProfile.getParticipants().size());
+		if(cfg.isSet("hasStarted")) {
+			hasStarted = cfg.getBoolean("hasStarted");
+			isPaused = hasStarted ? true : false;
+			endOnDeath = cfg.getBoolean("endOnDeath");
+			spawnNearFortress = cfg.getBoolean("spawnNearFortress");
+			noDamage = cfg.getBoolean("noDamage");
+			noReg = cfg.getBoolean("noReg");
+			noRegHard = cfg.getBoolean("noRegHard");
+			isCustomHealth = cfg.getBoolean("isCustomHealth");
+			customHP = cfg.getInt("customHP");
+			isSharedHealth = cfg.getBoolean("isSharedHealth");
+			sharedHP = cfg.getInt("sharedHP");
+			noBlockPlace = cfg.getBoolean("noBlockPlace");
+			noBlockBreaking = cfg.getBoolean("noBlockBreaking");
+			noCrafting = cfg.getBoolean("noCrafting");
+			noSneaking = cfg.getBoolean("noSneaking");			
+		}	
 		
-		hasStarted = cfg.getBoolean("hasStarted");
-		isPaused = hasStarted ? true : false;
-		endOnDeath = cfg.getBoolean("endOnDeath");
-		spawnNearFortress = cfg.getBoolean("spawnNearFortress");
-		noDamage = cfg.getBoolean("noDamage");
-		noReg = cfg.getBoolean("noReg");
-		noRegHard = cfg.getBoolean("noRegHard");
-		isCustomHealth = cfg.getBoolean("isCustomHealth");
-		customHP = cfg.getInt("customHP");
-		isSharedHealth = cfg.getBoolean("isSharedHealth");
-		sharedHP = cfg.getInt("sharedHP");
-		noBlockPlace = cfg.getBoolean("noBlockPlace");
-		noBlockBreaking = cfg.getBoolean("noBlockBreaking");
-		noCrafting = cfg.getBoolean("noCrafting");
-		noSneaking = cfg.getBoolean("noSneaking");
 		if(hasStarted) {
 			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, "PAUSED " + DateUtil.formatDuration(cfg.getLong("Timer")) + "- /timer pause"));
 			ChallengeProfile.getSecondTimer().setTime(cfg.getLong("Timer"));
@@ -70,7 +101,6 @@ public class ConfigHandler extends ConfigUtil {
 		else {
 			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, "/timer start"));
 		}
-		
 	}
 	
 	private static void storeChallengeProfilesAndTimers() {
@@ -87,6 +117,9 @@ public class ConfigHandler extends ConfigUtil {
 		cfg.set("isCustomHealth", isCustomHealth);
 		cfg.set("customHP", customHP);
 		cfg.set("isSharedHealth", isSharedHealth);
+		System.out.println("CUSTOMHP: " + customHP);
+		System.out.println("==========================================");
+		System.out.println("SHAREDHP: " + sharedHP);
 		cfg.set("sharedHP", sharedHP);
 		cfg.set("noBlockPlace", noBlockPlace);
 		cfg.set("noBlockBreaking", noBlockBreaking);

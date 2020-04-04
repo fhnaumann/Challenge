@@ -35,6 +35,7 @@ public class ChallengeProfile {
 	
 	private static void checkConditionsAndApply() {
 		HashSet<Player> players = fromUUIDToPlayer();
+		System.out.println("Right before size: " + players.size());
 		if(Settings.isCustomHealth) {	
 			players.stream()
 			.forEach(p -> {					
@@ -59,6 +60,7 @@ public class ChallengeProfile {
 	public static void restoreChallenge() {
 		if(restoreChallenge != null) {
 			restoreChallenge.restoreChallenge();
+			
 		}
 	}
 	

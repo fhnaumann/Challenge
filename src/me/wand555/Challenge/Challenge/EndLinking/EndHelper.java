@@ -65,4 +65,11 @@ public class EndHelper {
 		
 		return world.getBlockAt(rndmX, rndmY, rndmZ);	
 	}
+	
+	public static void reset() {
+		if(ObsidianPlatform.isCreated()) {
+			ObsidianPlatform.setPlatform(null);
+			ObsidianPlatform.setCreated(false);
+		}
+	}
 }

@@ -45,38 +45,7 @@ public class CE implements CommandExecutor {
 			if(cmd.getName().equalsIgnoreCase("challenge")) {
 				//challenge create
 				if(args.length == 1) {
-					//DELTE THIS COMMAND
-					if(args[0].equalsIgnoreCase("create")) {
-						//if(WorldLinkManager.worlds.isEmpty()) {
-							if(!WorldLinkManager.worlds.contains(p.getWorld())) {
-								WorldUtil.storePlayerInformationBeforeChallenge(p);
-								
-								p.sendMessage("Creating worlds...");
-								WorldCreator wCreator = new WorldCreator("ChallengeOverworld");
-								wCreator.environment(Environment.NORMAL);
-								WorldLinkManager.worlds.add(wCreator.createWorld());
-								WorldCreator wCreatorN = new WorldCreator("ChallengeNether");
-								wCreatorN.environment(Environment.NETHER);
-								WorldLinkManager.worlds.add(wCreatorN.createWorld());
-								WorldCreator wCreatorE = new WorldCreator("ChallengeEnd");
-								wCreatorE.environment(Environment.THE_END);
-								WorldLinkManager.worlds.add(wCreatorE.createWorld());
-								
-								
-								ChallengeProfile.addToParticipants(p.getUniqueId());
-								//p.teleport(WorldLinkManager.worlds.stream().filter(w -> w.getEnvironment() == Environment.NORMAL).findFirst().get().getSpawnLocation(), TeleportCause.PLUGIN);
-								p.sendMessage("Teleported you to the challenge world.");
-							}
-							else {
-								p.sendMessage("You're already in the challenge world.");
-							}
-						//}
-						//else {
-						//	p.sendMessage("You're already in the challenge world.22");
-						//	p.sendMessage("If not, type /challenge join to teleport.");
-						//}
-					}
-					else if(args[0].equalsIgnoreCase("join")) {
+					if(args[0].equalsIgnoreCase("join")) {
 						if(!WorldLinkManager.worlds.isEmpty()) {
 							if(!WorldLinkManager.worlds.contains(p.getWorld())) {
 								WorldUtil.storePlayerInformationBeforeChallenge(p);
@@ -84,10 +53,10 @@ public class CE implements CommandExecutor {
 									//if player has joined, left and now joined again
 								WorldUtil.loadPlayerInformationInChallengeAndApply(p);
 								//}
-								System.out.println("Size: " + ChallengeProfile.getParticipants().size());
+								
 								//can actually be transfered to changeworldlistener
 								ChallengeProfile.addToParticipants(p.getUniqueId());
-								
+								System.out.println("Size: " + ChallengeProfile.getParticipants().size());
 								//p.teleport(WorldLinkManager.worlds.stream().filter(w -> w.getEnvironment() == Environment.NORMAL).findFirst().get().getSpawnLocation(), TeleportCause.PLUGIN);
 								p.sendMessage("Teleported.");
 							}
@@ -127,10 +96,12 @@ public class CE implements CommandExecutor {
 							Settings.restoreDefault();				
 							WorldUtil.deleteChallengeWorldsAndPlayerData();
 							WorldUtil.deletePortalData();
+							
 							ChallengeProfile.onReset();
 							WorldLinkManager.worlds.clear();
 							
 							p.sendMessage("Deleted challenge worlds.");
+							p.sendMessage("Reload/Restart the server and type /challenge join to join a new challenge.");
 						}
 						else {
 							p.sendMessage("You have to be in the challenge to reset it.");
@@ -230,10 +201,21 @@ public class CE implements CommandExecutor {
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("pos")) {
-				if(args.length == 1) {
+				if(args.length == 0) {
+					PositionManager.positions.forEach(pos -> {
+						p.sendMessage(PositionManager.displayPosition(pos));
+					});
+				}
+				else if(args.length == 1) {
 					//if contains...
-					PositionManager.addToPosition(new Position(args[0], p.getLocation(), p.getUniqueId(), new Date()));
-					p.sendMessage("Registered position " + args[0]);
+					if(PositionManager.positionWithNameExists(args[0])) {
+						p.sendMessage(PositionManager.displayPosition(PositionManager.getPositionFromName(args[0])));
+					}
+					else {
+						PositionManager.addToPosition(new Position(args[0], p.getLocation(), p.getUniqueId(), new Date()));
+						p.sendMessage("Registered position " + args[0]);
+					}
+					
 				}
 				else {
 					p.sendMessage("Syntax: /pos <name>");

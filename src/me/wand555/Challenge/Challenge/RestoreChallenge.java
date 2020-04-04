@@ -27,10 +27,13 @@ public class RestoreChallenge {
 		//set inv contents and locations
 		//clear the hashmap (and set timer to 0)
 		ChallengeProfile.getSecondTimer().setTime(oldTimer);
-		ChallengeProfile.getSecondTimer().startIncreasing();	
+		Settings.setDone();
+		Settings.setPaused();
+		ChallengeProfile.resumeTimer();	
 		participants.entrySet().stream()
 			.forEach(entry -> {
 				Player p = Bukkit.getPlayer(entry.getKey());
+				if(p == null) return;
 				p.teleport(entry.getValue().getPlayerLoc(), TeleportCause.PLUGIN);
 				p.setGameMode(GameMode.SURVIVAL);
 				p.getInventory().setContents(entry.getValue().getInvContent().toArray(new ItemStack[entry.getValue().getInvContent().size()]));
