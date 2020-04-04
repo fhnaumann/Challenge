@@ -1,11 +1,10 @@
 package me.wand555.Challenge.Challenge;
 
 import java.util.ArrayList;
+
 import java.util.HashSet;
 
-import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 
 public class WorldLinkManager {

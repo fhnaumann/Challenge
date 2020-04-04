@@ -1,7 +1,8 @@
 package GUIClickListener;
 
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
+
+import org.bukkit.ChatColor;
 import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,7 +39,7 @@ public class ChallengeItemClickListener implements Listener {
 		if(event.getClickedInventory() != null) {
 			if(event.getCurrentItem() != null) {
 				if(event.getWhoClicked() instanceof Player) {
-					if(event.getView().getTitle().equalsIgnoreCase("Overview")) {
+					if(event.getView().getTitle().equalsIgnoreCase(ChatColor.GREEN + "Settings")) {
 						Player p = (Player) event.getWhoClicked();
 						int slot = event.getRawSlot();
 						if(slot <= 35) event.setCancelled(true);	
@@ -61,7 +62,6 @@ public class ChallengeItemClickListener implements Listener {
 						case 3:
 							//change that settings before switching noReg, because gamerule logic is inverted to mine
 							WorldLinkManager.worlds.stream().forEach(w -> w.setGameRule(GameRule.NATURAL_REGENERATION, Settings.noReg));
-							WorldLinkManager.worlds.stream().forEach(w -> System.out.println(w.getGameRuleValue(GameRule.NATURAL_REGENERATION)));
 							Settings.setNoReg();
 							gui.createGUI(p, GUIType.OVERVIEW);
 							reloadOtherPlayerInvs(gui, p);
@@ -83,17 +83,19 @@ public class ChallengeItemClickListener implements Listener {
 						                if(StringUtils.isNumeric(lines[0])) {
 						                	int amount = Integer.valueOf(lines[0]);
 						                	if(amount > 0) {
-						                		player.sendMessage("Changed settings");
+						                		player.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Changed settings");
 						                		Settings.setCustomHP(amount);
 						                		return true;
 						                	}
 						                	else {
-						                		player.sendMessage(lines[0] + " has to be between 0 and MAX_LIFE");
+						                		player.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "'" + ChatColor.GREEN + 
+						                				lines[0] + ChatColor.GRAY + "' has to be between 0 and MAX_LIFE");
 						                	}
 						                    return true;
 						                }
 						                else {
-						                	player.sendMessage(lines[0] + " is not a number.");
+						                	player.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "'" + ChatColor.GREEN + 
+						                			lines[0] + ChatColor.GRAY + "' is not a number.");
 						                }
 						                return false; // failure. becaues reopenIfFail was called, menu will reopen when closed.
 						            })

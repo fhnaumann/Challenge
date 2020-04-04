@@ -1,8 +1,7 @@
 package me.wand555.Challenge.NetherLinking;
 
-import java.util.ArrayList;
+
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Axis;
@@ -13,7 +12,6 @@ import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Orientable;
-import org.bukkit.entity.Wolf;
 
 import me.wand555.Challenge.Challenge.Challenge;
 

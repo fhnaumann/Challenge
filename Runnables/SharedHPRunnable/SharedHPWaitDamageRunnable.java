@@ -2,8 +2,8 @@ package SharedHPRunnable;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
+
 import me.wand555.Challenge.Challenge.Challenge;
-import me.wand555.Challenge.Challenge.ChallengeEndReason;
 import me.wand555.Challenge.Challenge.ChallengeProfile;
 
 public class SharedHPWaitDamageRunnable extends BukkitRunnable {

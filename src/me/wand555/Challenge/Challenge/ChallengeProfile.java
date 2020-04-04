@@ -1,21 +1,18 @@
 package me.wand555.Challenge.Challenge;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.UUID;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import StartRunnables.DisplayActionBarTimer;
 import StartRunnables.SecondTimer;
+import StartRunnables.TimerMessage;
 import me.wand555.Challenge.Util.DateUtil;
 
 public class ChallengeProfile {
@@ -91,7 +88,7 @@ public class ChallengeProfile {
 	
 	public static void pauseTimer() {
 		ChallengeProfile.getSecondTimer().stopIncreasing();
-		ChallengeProfile.getSecondTimer().setMessage("PAUSED " + DateUtil.formatDuration(ChallengeProfile.getSecondTimer().getTime()) + "- /timer pause");
+		ChallengeProfile.getSecondTimer().setMessage(TimerMessage.TIMER_PAUSED.getMessage().replace("[TIME]", DateUtil.formatDuration(ChallengeProfile.getSecondTimer().getTime())));
 		Settings.setPaused();
 	}
 	
@@ -114,11 +111,11 @@ public class ChallengeProfile {
 		//secondTimer.cancel();
 		Settings.setDone();
 		ChallengeProfile.getSecondTimer().stopIncreasing();
-		ChallengeProfile.getSecondTimer().setMessage("Final Time: " + DateUtil.formatDuration(secondTimer.getTime()) + " - /challenge reset");
+		ChallengeProfile.getSecondTimer().setMessage(TimerMessage.TIMER_FINISHED.getMessage().replace("[TIME]", DateUtil.formatDuration(secondTimer.getTime())));
 		players.stream().forEach(p -> {
 			p.sendMessage(reason.getMessage());
 			p.setGameMode(GameMode.SPECTATOR);
-			p.sendMessage("Type /challenge reset to reset the challenge.");
+			p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Type /challenge reset to reset the challenge.");
 		});
 	}
 	

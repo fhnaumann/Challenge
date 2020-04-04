@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 public class PositionManager {
@@ -16,8 +17,10 @@ public class PositionManager {
 	}
 	
 	public static String displayPosition(Position pos) {
-		return "Position: " + pos.getName() + " at " + displayLocation(pos.getLocation()) + " ("
-				+ pos.getDate() + " by " + Bukkit.getOfflinePlayer(pos.getCreator()).getName() + ")";
+		return "Position: " + ChatColor.GREEN + pos.getName() + ChatColor.GRAY +" at " + ChatColor.GREEN 
+				+ displayLocation(pos.getLocation()) + ChatColor.GRAY + " (" + ChatColor.GREEN
+				+ pos.getDate() + ChatColor.GRAY + " by " + ChatColor.GREEN + Bukkit.getOfflinePlayer(pos.getCreator()).getName()
+				+ ChatColor.GRAY + ")";
 	}
 	
 	public static boolean positionWithNameExists(String name) {

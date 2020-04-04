@@ -1,7 +1,5 @@
 package me.wand555.Challenge.Util;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.time.Duration;
 
 public class DateUtil {

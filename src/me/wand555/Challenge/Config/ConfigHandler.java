@@ -2,25 +2,22 @@ package me.wand555.Challenge.Config;
 
 import java.io.File;
 
-import java.io.IOException;
+
 import java.util.HashSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import StartRunnables.SecondTimer;
+import StartRunnables.TimerMessage;
 
 import org.bukkit.Axis;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import me.wand555.Challenge.Challenge.Challenge;
 import me.wand555.Challenge.Challenge.ChallengeProfile;
 import me.wand555.Challenge.Challenge.Position;
 import me.wand555.Challenge.Challenge.PositionManager;
-import me.wand555.Challenge.Challenge.Settings;
 import me.wand555.Challenge.Challenge.EndLinking.ObsidianPlatform;
 import me.wand555.Challenge.NetherLinking.Gate;
 import me.wand555.Challenge.Util.DateUtil;
@@ -75,7 +72,6 @@ public class ConfigHandler extends ConfigUtil {
 				.map(s -> UUID.fromString(s.trim()))
 				.collect(Collectors.toCollection(HashSet::new)));
 		//has to be done this way, because I need a new instance, but the timer shouldnt continue.
-		System.out.println(ChallengeProfile.getParticipants().size());
 		if(cfg.isSet("hasStarted")) {
 			hasStarted = cfg.getBoolean("hasStarted");
 			isPaused = hasStarted ? true : false;
@@ -95,11 +91,11 @@ public class ConfigHandler extends ConfigUtil {
 		}	
 		
 		if(hasStarted) {
-			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, "PAUSED " + DateUtil.formatDuration(cfg.getLong("Timer")) + "- /timer pause"));
+			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, TimerMessage.TIMER_PAUSED.getMessage().replace("[TIME]", DateUtil.formatDuration(cfg.getLong("Timer")))));
 			ChallengeProfile.getSecondTimer().setTime(cfg.getLong("Timer"));
 		}
 		else {
-			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, "/timer start"));
+			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, TimerMessage.START_TIMER.getMessage()));
 		}
 	}
 	
@@ -117,9 +113,6 @@ public class ConfigHandler extends ConfigUtil {
 		cfg.set("isCustomHealth", isCustomHealth);
 		cfg.set("customHP", customHP);
 		cfg.set("isSharedHealth", isSharedHealth);
-		System.out.println("CUSTOMHP: " + customHP);
-		System.out.println("==========================================");
-		System.out.println("SHAREDHP: " + sharedHP);
 		cfg.set("sharedHP", sharedHP);
 		cfg.set("noBlockPlace", noBlockPlace);
 		cfg.set("noBlockBreaking", noBlockBreaking);
@@ -127,7 +120,6 @@ public class ConfigHandler extends ConfigUtil {
 		cfg.set("noSneaking", noSneaking);
 		
 		if(hasStarted) {
-			System.out.println("STORED NEW TIMER TO CONFIG!!!!!!!!!!!!");
 			cfg.set("Timer", ChallengeProfile.getSecondTimer().getTime());
 		}
 		saveCustomYml(cfg, file);

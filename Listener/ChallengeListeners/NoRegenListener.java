@@ -1,18 +1,17 @@
 package ChallengeListeners;
 
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 
 import me.wand555.Challenge.Challenge.Challenge;
 import me.wand555.Challenge.Challenge.Settings;
 
 /**
  * Listens to noReg and noRegHard
- * @author Felix
+ * @author wand555
  *
  */
 public class NoRegenListener implements Listener {

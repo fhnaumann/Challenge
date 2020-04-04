@@ -1,11 +1,9 @@
 package me.wand555.Challenge.Challenge;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.World;
+import org.bukkit.ChatColor;
 import org.bukkit.WorldCreator;
 import org.bukkit.World.Environment;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,7 +23,6 @@ import EnderDragonListener.EnderDragonDeathListener;
 import GUI.GUI;
 import GUIClickListener.ChallengeItemClickListener;
 import StartListeners.PlayerTeleportWorldListener;
-import StartRunnables.SecondTimer;
 import me.wand555.Challenge.Command.CE;
 import me.wand555.Challenge.Config.ConfigHandler;
 import me.wand555.Challenge.NetherLinking.PortalListener;
@@ -33,6 +30,8 @@ import me.wand555.Challenge.Util.SignMenuFactory;
 
 public class Challenge extends JavaPlugin {
 
+	public static final String PREFIX = ChatColor.GRAY + "[" + ChatColor.GREEN + "Challenge" + ChatColor.GRAY + "] ";
+	
 	private Challenge plugin;
 	private CE myCE;
 	private GUI gui;
@@ -76,7 +75,6 @@ public class Challenge extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		System.out.println("ON DISABLE SHAREDHP: " + Settings.sharedHP);
 		if(!Settings.isPaused && Settings.hasStarted) {
 			ChallengeProfile.pauseTimerOnDisable();
 		}

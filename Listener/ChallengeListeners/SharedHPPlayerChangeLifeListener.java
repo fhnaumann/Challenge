@@ -33,7 +33,6 @@ public class SharedHPPlayerChangeLifeListener implements Listener {
 		if(Settings.isSharedHealth) {
 			if(Settings.canTakeEffect()) {
 				if(event.getEntityType() == EntityType.PLAYER) {
-					System.out.println(ChallengeProfile.getSharedHPWaitDamageRunnableID());
 					if(event.getCause() != DamageCause.CUSTOM) {
 						event.setCancelled(true);
 						if(ChallengeProfile.getSharedHPWaitDamageRunnableID() == 0) {
@@ -41,7 +40,6 @@ public class SharedHPPlayerChangeLifeListener implements Listener {
 							SharedHPWaitDamageRunnable runnable = new SharedHPWaitDamageRunnable(plugin);
 							ChallengeProfile.setSharedHPWaitDamageRunnableID(runnable.getTaskId());
 							Settings.setSharedHP(Settings.sharedHP - event.getFinalDamage());
-							System.out.println("Damage: " + event.getFinalDamage() + "   Total: " + Settings.sharedHP);
 							if(Settings.sharedHP > 0) {
 								ChallengeProfile.fromUUIDToPlayer().stream()
 								.filter(p -> p.getGameMode() == GameMode.SURVIVAL || p.getGameMode() == GameMode.ADVENTURE)

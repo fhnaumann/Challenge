@@ -23,12 +23,8 @@ public class NoBlockPlaceListener implements Listener {
 	@EventHandler
 	public void onBlockPlaceEvent(BlockPlaceEvent event) {
 		if(Settings.noBlockPlace) {
-			if(Settings.canTakeEffect()) {
-				
+			if(Settings.canTakeEffect()) {				
 				Material mat = event.getBlockPlaced().getType();
-				System.out.println(mat);
-				System.out.println(!(mat == Material.FIRE 
-						&& event.getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN));
 				if(mat != Material.LAVA 
 						&& mat != Material.WATER
 						&& mat != Material.END_PORTAL_FRAME

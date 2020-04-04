@@ -1,8 +1,5 @@
 package EnderDragonListener;
 
-import java.util.ArrayList;
-
-import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

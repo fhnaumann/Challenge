@@ -1,6 +1,7 @@
 package me.wand555.Challenge.Challenge.EndLinking;
 
 import org.bukkit.Location;
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;

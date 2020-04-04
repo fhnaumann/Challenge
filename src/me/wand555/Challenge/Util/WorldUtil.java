@@ -1,36 +1,30 @@
 package me.wand555.Challenge.Util;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 
-import me.wand555.Challenge.Challenge.Challenge;
 import me.wand555.Challenge.Challenge.ChallengeProfile;
 import me.wand555.Challenge.Challenge.PositionManager;
 import me.wand555.Challenge.Challenge.WorldLinkManager;
 import me.wand555.Challenge.Challenge.EndLinking.EndHelper;
-import me.wand555.Challenge.Challenge.EndLinking.ObsidianPlatform;
 import me.wand555.Challenge.Config.ConfigUtil;
 import me.wand555.Challenge.NetherLinking.Gate;
-import me.wand555.Challenge.NetherLinking.LocationHelper;
-import net.minecraft.server.v1_15_R1.Material;
 
 public class WorldUtil extends ConfigUtil {
 	
@@ -48,7 +42,6 @@ public class WorldUtil extends ConfigUtil {
 			return;
 		}
 		boolean b = player.teleport(deserializeLocationDetailed(cfg.getString("Challenge.Location")));
-		System.out.println("!!!!!!!!!!!!!!!!! " + b);
 		player.setGameMode(GameMode.valueOf(cfg.getString("Challenge.GameMode")));
 		player.setHealth(cfg.getDouble("Challenge.Health"));
 		player.setFoodLevel(cfg.getInt("Challenge.Hunger"));
@@ -198,7 +191,6 @@ public class WorldUtil extends ConfigUtil {
 		unloadChallengeWorlds();
 		for(World w : WorldLinkManager.worlds) {
 			File path = new File(w.getWorldFolder(), "");
-			System.out.println(path.toString());
 			deleteWorld(path);
 		}
 	}

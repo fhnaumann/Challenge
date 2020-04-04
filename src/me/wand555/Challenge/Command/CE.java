@@ -1,24 +1,22 @@
 package me.wand555.Challenge.Command;
 
 import org.bukkit.WorldCreator;
+
+
 import org.bukkit.attribute.Attribute;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.World.Environment;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import GUI.GUI;
 import GUIType.GUIType;
-import StartRunnables.SecondTimer;
 import me.wand555.Challenge.Challenge.Challenge;
 import me.wand555.Challenge.Challenge.ChallengeProfile;
 import me.wand555.Challenge.Challenge.Position;
@@ -56,16 +54,15 @@ public class CE implements CommandExecutor {
 								
 								//can actually be transfered to changeworldlistener
 								ChallengeProfile.addToParticipants(p.getUniqueId());
-								System.out.println("Size: " + ChallengeProfile.getParticipants().size());
 								//p.teleport(WorldLinkManager.worlds.stream().filter(w -> w.getEnvironment() == Environment.NORMAL).findFirst().get().getSpawnLocation(), TeleportCause.PLUGIN);
-								p.sendMessage("Teleported.");
+								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Teleported.");
 							}
 							else {
-								p.sendMessage("You're already in the challenge world.");
+								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're already in the challenge world.");
 							}
 						}
 						else {
-							p.sendMessage("There is no challenge to join.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "There is no challenge to join.");
 						}
 					}
 					else if(args[0].equalsIgnoreCase("leave")) {
@@ -74,10 +71,10 @@ public class CE implements CommandExecutor {
 							WorldUtil.loadPlayerInformationBeforeChallengeAndApply(p);
 							ChallengeProfile.removeFromParticipants(p.getUniqueId());
 							//p.teleport(WorldLinkManager.worlds.stream().filter(w -> w.getEnvironment() == Environment.NORMAL).findFirst().get().getSpawnLocation(), TeleportCause.PLUGIN);
-							p.sendMessage("Teleported.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Teleported.");
 						}
 						else {
-							p.sendMessage("You're not in a challenge.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge.");
 						}
 					}
 					else if(args[0].equalsIgnoreCase("restore")) {
@@ -100,19 +97,19 @@ public class CE implements CommandExecutor {
 							ChallengeProfile.onReset();
 							WorldLinkManager.worlds.clear();
 							
-							p.sendMessage("Deleted challenge worlds.");
-							p.sendMessage("Reload/Restart the server and type /challenge join to join a new challenge.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Deleted challenge worlds.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Reload/Restart the server and type /challenge join to join a new challenge.");
 						}
 						else {
-							p.sendMessage("You have to be in the challenge to reset it.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You have to be in the challenge to reset it.");
 						}
 					}
 					else {
-						p.sendMessage("Syntax: /challenge <option>");
+						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /challenge <option>");
 					}
 				}
 				else {
-					p.sendMessage("Syntax: /challenge <option>");
+					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /challenge <option>");
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("timer")) {
@@ -123,11 +120,11 @@ public class CE implements CommandExecutor {
 								ChallengeProfile.startTimer();
 							}
 							else {
-								p.sendMessage("Timer is started. Use /timer pause to pause or resume the timer.");
+								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Timer is started. Use /timer pause to pause or resume the timer.");
 							}						
 						}
 						else {
-							p.sendMessage("You're not in a challenge world.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge world.");
 						}
 					}
 					else if(args[0].equalsIgnoreCase("pause")) {
@@ -141,19 +138,19 @@ public class CE implements CommandExecutor {
 								ChallengeProfile.resumeTimer();
 							}
 							else {
-								p.sendMessage("Cannot pause. Challenge is not running.");
+								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Cannot pause. Challenge is not running.");
 							}
 						}
 						else {
-							p.sendMessage("You're not in a challenge world.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge world.");
 						}
 					}
 					else {
-						p.sendMessage("Syntax: /timer <option>");
+						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /timer <option>");
 					}
 				}
 				else {
-					p.sendMessage("Syntax: /timer <option>");
+					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /timer <option>");
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("hp")) {
@@ -161,16 +158,16 @@ public class CE implements CommandExecutor {
 				if(args.length == 1) {
 					if(StringUtils.isNumeric(args[0])) {
 						int amount = Integer.valueOf(args[0]);
-						if(amount >= 0 && amount < p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()) {
+						if(amount >= 0 && amount <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()) {
 							p.setHealth(amount);
-							p.sendMessage("Set HP.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Set HP.");
 						}
 						else {
-							p.sendMessage("Amount has to be 0 <= amount < MAX_HEALTH.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Amount has to be 0 <= amount < MAX_HEALTH.");
 						}
 					}
 					else {
-						p.sendMessage("'" + args[1] + "' is not a number.");
+						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "'" + ChatColor.GREEN + args[1] + ChatColor.GRAY + "' is not a number.");
 					}
 				}
 				//to somebody else
@@ -181,23 +178,23 @@ public class CE implements CommandExecutor {
 							Player playerTo = Bukkit.getPlayer(args[0]);
 							if(playerTo != null) {
 								playerTo.setHealth(amount);
-								p.sendMessage("Set HP.");
+								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Set HP.");
 							}
 							else {
-								p.sendMessage("The player '" + args[0] + "' is not online.");
+								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "The player '" + ChatColor.GREEN + args[0] + ChatColor.GRAY + "' is not online.");
 							}
 							
 						}
 						else {
-							p.sendMessage("Amount has to be 0 <= amount < MAX_HEALTH.");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Amount has to be 0 <= amount < MAX_HEALTH.");
 						}
 					}
 					else {
-						p.sendMessage("'" + args[1] + "' is not a number.");
+						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + ChatColor.GREEN + "'" + args[1] + ChatColor.GRAY + "' is not a number.");
 					}
 				}
 				else {
-					p.sendMessage("Syntax: /hp <player> <amount>");
+					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /hp <player> <amount>");
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("pos")) {
@@ -209,16 +206,16 @@ public class CE implements CommandExecutor {
 				else if(args.length == 1) {
 					//if contains...
 					if(PositionManager.positionWithNameExists(args[0])) {
-						p.sendMessage(PositionManager.displayPosition(PositionManager.getPositionFromName(args[0])));
+						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + PositionManager.displayPosition(PositionManager.getPositionFromName(args[0])));
 					}
 					else {
 						PositionManager.addToPosition(new Position(args[0], p.getLocation(), p.getUniqueId(), new Date()));
-						p.sendMessage("Registered position " + args[0]);
+						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Registered position " + ChatColor.GREEN + args[0]);
 					}
 					
 				}
 				else {
-					p.sendMessage("Syntax: /pos <name>");
+					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /pos <name>");
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("settings")) {
@@ -228,20 +225,20 @@ public class CE implements CommandExecutor {
 							gui.createGUI(p, GUIType.OVERVIEW);
 						}
 						else {
-							p.sendMessage("Timer has to be paused. /timer pause");
+							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Timer has to be paused. /timer pause");
 						}				
 					}
 					else {
-						p.sendMessage("You're not in a challenge world.");
+						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge world.");
 					}
 				}
 				else {
-					p.sendMessage("Syntax: /settings");
+					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /settings");
 				}
 			}
 		}
 		else {
-			sender.sendMessage("Only for players");
+			sender.sendMessage("Only for players!");
 		}
 		return true;
 	}

@@ -1,6 +1,7 @@
 package GUI;
 
 import org.bukkit.ChatColor;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import me.wand555.Challenge.Challenge.Challenge;
-import me.wand555.Challenge.Challenge.ChallengeProfile;
 import me.wand555.Challenge.Challenge.Settings;
 
 public class GUI {
@@ -36,62 +36,71 @@ public class GUI {
 	public void createGUI(Player p, GUIType type) {
 		Inventory gui = null;
 		if(type == OVERVIEW) {
-			gui = plugin.getServer().createInventory(null, 36, "Overview");
+			gui = plugin.getServer().createInventory(null, 36, ChatColor.GREEN + "Settings");
 			for(int i=0; i<gui.getSize(); i++) {
 				switch(i) {
 				case 0:
-					gui.setItem(i, createItem(Material.PLAYER_HEAD, "Death", 
-							new ArrayList<String>(Arrays.asList("The challenge is over when someone dies!")), 
+					gui.setItem(i, createItem(Material.PLAYER_HEAD, ChatColor.GRAY + "" + ChatColor.BOLD + "Death", 
+							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "The challenge is over when someone dies!")), 
 							Settings.endOnDeath));
 					break;
 				case 1:
-					gui.setItem(i, createItem(Material.BLAZE_ROD, "Guarantee Fortress Spawn", 
-							Lists.newArrayList("Guarantees a portal spawn", 
-									"near/inside a fortress!", "Might lag the server for the first teleportation!"), 
+					gui.setItem(i, createItem(Material.BLAZE_ROD, ChatColor.GRAY + "" + ChatColor.BOLD + "Guarantee Fortress Spawn", 
+							Lists.newArrayList(ChatColor.GRAY + "Guarantees a portal spawn", 
+									ChatColor.GRAY + "near/inside a fortress!", 
+									ChatColor.GRAY + "Might lag the server for the first teleportation!"), 
 							Settings.spawnNearFortress));
 					break;
 				case 2:
-					gui.setItem(i, createItem(Material.WITHER_ROSE, "No Damage", 
-							new ArrayList<String>(Arrays.asList("No one is allowed to", "take damage!")), 
+					gui.setItem(i, createItem(Material.WITHER_ROSE, ChatColor.GRAY + "" + ChatColor.BOLD + "No Damage", 
+							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "No one is allowed to", 
+									ChatColor.GRAY + "take damage!")), 
 							Settings.noDamage));
 					break;
 				case 3:
-					gui.setItem(i, createPotionItem(Material.POTION, PotionType.REGEN, "No Regeneration", 
-							new ArrayList<String>(Arrays.asList("No one regenerates health regularly!")), 
+					gui.setItem(i, createPotionItem(Material.POTION, PotionType.REGEN, ChatColor.GRAY + "" + ChatColor.BOLD + "No Regeneration", 
+							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "No one regenerates health regularly!")), 
 							Settings.noReg));
 					break;
 				case 4:
-					gui.setItem(i, createPotionItem(Material.POTION, PotionType.REGEN, "No Regeneration", 
-							new ArrayList<String>(Arrays.asList("No one regenerates health at all!", "Overrides \"No Regeneration\"")), 
+					gui.setItem(i, createPotionItem(Material.POTION, PotionType.REGEN, ChatColor.GRAY + "" + ChatColor.BOLD + "No Regeneration", 
+							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "No one regenerates health at all!", 
+									ChatColor.GRAY + "Overrides \"No Regeneration\"")), 
 							Settings.noRegHard));
 					break;
 				case 5:
-					gui.setItem(i, createItemHealthLore(Material.COMMAND_BLOCK, "Custom Health", 
-							new ArrayList<String>(Arrays.asList("Set the max. health for all players!", "1 Heart = 2HP")), 
+					gui.setItem(i, createItemHealthLore(Material.COMMAND_BLOCK, ChatColor.GRAY + "" + ChatColor.BOLD + "Custom Health", 
+							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "Set the max. health for all players!", 
+									ChatColor.GRAY + "1 Heart = 2HP")), 
 							Settings.isCustomHealth));
 					break;
 				case 6:
-					gui.setItem(i, createItem(Material.GHAST_TEAR, "Shared Health", 
-							new ArrayList<String>(Arrays.asList("Health will be shared across all players!")), 
+					gui.setItem(i, createItem(Material.GHAST_TEAR, ChatColor.GRAY + "" + ChatColor.BOLD + "Shared Health", 
+							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "Health will be shared across all players!")), 
 							Settings.isSharedHealth));
 					break;
 				case 7:
-					gui.setItem(i, createItem(Material.GRASS_BLOCK, "No Block Placing", 
-							Lists.newArrayList("Block placing is forbidden!", "Exception:", "Ender eyes", "Water/Lava bucket", "Flint and Steel when lighting up a portal"), 
+					gui.setItem(i, createItem(Material.GRASS_BLOCK, ChatColor.GRAY + "" + ChatColor.BOLD + "No Block Placing", 
+							Lists.newArrayList(ChatColor.GRAY + "Block placing is forbidden!", 
+									ChatColor.GRAY + "Exception:", 
+									ChatColor.GRAY + "Ender eyes", 
+									ChatColor.GRAY + "Water/Lava bucket", 
+									ChatColor.GRAY + "Flint and Steel",
+									ChatColor.GRAY + "when lighting up a portal"), 
 							Settings.noBlockPlace));
 					break;
 				case 8:
-					gui.setItem(i, createItem(Material.STONE, "No Block Breaking", 
-							Lists.newArrayList("Block breaking is forbidden!"), Settings.noBlockBreaking));
+					gui.setItem(i, createItem(Material.STONE, ChatColor.GRAY + "" + ChatColor.BOLD + "No Block Breaking", 
+							Lists.newArrayList(ChatColor.GRAY + "Block breaking is forbidden!"), Settings.noBlockBreaking));
 					break;
 				case 9:
-					gui.setItem(i, createItem(Material.CRAFTING_TABLE, "No Crafting", 
-							Lists.newArrayList("Crafting is forbidden"), 
+					gui.setItem(i, createItem(Material.CRAFTING_TABLE, ChatColor.GRAY + "" + ChatColor.BOLD + "No Crafting", 
+							Lists.newArrayList(ChatColor.GRAY + "Crafting is forbidden"), 
 							Settings.noCrafting));
 					break;
 				case 10:
-					gui.setItem(i, createItem(Material.STONE_PRESSURE_PLATE, "No Sneaking", 
-							Lists.newArrayList("Sneaking is forbidden"), Settings.noSneaking));
+					gui.setItem(i, createItem(Material.STONE_PRESSURE_PLATE, ChatColor.GRAY + "" + ChatColor.BOLD + "No Sneaking", 
+							Lists.newArrayList(ChatColor.GRAY + "Sneaking is forbidden"), Settings.noSneaking));
 					break;
 				default:
 					gui.setItem(i, createGlass());
@@ -126,7 +135,7 @@ public class GUI {
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			lore.add(ChatColor.GREEN + "Enabled");
-			lore.add("Max HP: " + Settings.customHP);
+			lore.add(ChatColor.GRAY + "Max HP: " + ChatColor.GREEN + Settings.customHP);
 		}
 		else {
 			lore.add(ChatColor.RED + "Disabled");
@@ -158,7 +167,7 @@ public class GUI {
 	private ItemStack createGlass() {
 		ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(" ");
+		meta.setDisplayName(ChatColor.GRAY + "TBA");
 		item.setItemMeta(meta);
 		return item;
 	}

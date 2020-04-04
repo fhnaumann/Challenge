@@ -1,11 +1,12 @@
 package me.wand555.Challenge.Challenge;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -37,7 +38,7 @@ public class RestoreChallenge {
 				p.teleport(entry.getValue().getPlayerLoc(), TeleportCause.PLUGIN);
 				p.setGameMode(GameMode.SURVIVAL);
 				p.getInventory().setContents(entry.getValue().getInvContent().toArray(new ItemStack[entry.getValue().getInvContent().size()]));
-				p.sendMessage("You received your items back and were teleported to the location when the challenge ended.");
+				p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You received your items back and were teleported to the location when the challenge ended.");
 			});
 		participants.clear();
 		this.oldTimer = 0;

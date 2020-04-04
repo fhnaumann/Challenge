@@ -1,12 +1,9 @@
 package StartRunnables;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
+
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.wand555.Challenge.Challenge.Challenge;
@@ -43,15 +40,16 @@ public class SecondTimer extends BukkitRunnable {
 		if(increaseTime) {
 			this.time += 1;
 			String displayTime = DateUtil.formatDuration(time);
-			TextComponent component = new TextComponent(ChatColor.GOLD + displayTime);
+			TextComponent component = new TextComponent(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + displayTime);
 			Bukkit.getOnlinePlayers().stream()
 			.filter(p -> WorldLinkManager.worlds.contains(p.getWorld()))
 			.forEach(p -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, component)); 
 		}
 		else {
+			TextComponent component = new TextComponent(msg);
 			Bukkit.getOnlinePlayers().stream()
 			.filter(p -> WorldLinkManager.worlds.contains(p.getWorld()))
-			.forEach(p -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(msg)));
+			.forEach(p -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, component));
 		}				
 	}
 
