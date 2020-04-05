@@ -43,7 +43,7 @@ public class ChallengeItemClickListener implements Listener {
 						Player p = (Player) event.getWhoClicked();
 						int slot = event.getRawSlot();
 						if(slot <= 35) event.setCancelled(true);
-						if(p.hasPermission("challenge.settings.change")) {
+						if(p.hasPermission("challenge.settings.modify")) {
 							switch(slot) {
 							case 0:
 								Settings.setEndOnDeath();

@@ -1,28 +1,29 @@
 main: me.wand555.Challenge.Challenge.Challenge
 name: Challenge
-version: 0.0.3
-description: Test.
+version: 0.0.4
+description: A Challenge plugin to customize vanilla experience!
 api-version: 1.13
 author: wand555
 commands:
   challenge:
     usage: /challenge <option>
-    description: sdfgsg
-    permission: challenge.create
-    message: &cYou dont have permission to set a campfire!
+    description: General options.
   timer:
     usage: /timer <option>
     description: timer settings
   hp:
     usage: /hp <player> <amount>
     description: Sets the player's HP to the given amount.
+    permission: challenge.hp
   pos:
-    usage: /pos <name>
+    usage: /pos <name> Sets a pos visible to all players.
     description: Registers new pos with name and player postion.
   bp:
     usage: /bp
     description: Opens up shared backpack.
+    permission: challenge.bp
   settings:
     usage: /settings
     description: Opens gui with settings.
+    permission: challenge.settings.view
     
