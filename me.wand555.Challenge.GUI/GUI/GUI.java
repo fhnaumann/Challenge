@@ -103,6 +103,25 @@ public class GUI {
 					gui.setItem(i, createItem(Material.STONE_PRESSURE_PLATE, ChatColor.GRAY + "" + ChatColor.BOLD + "No Sneaking", 
 							Lists.newArrayList(ChatColor.GRAY + "Sneaking is forbidden"), Settings.noSneaking));
 					break;
+				case 11:
+					gui.setItem(i, createItem(Material.WHITE_GLAZED_TERRACOTTA, 
+							ChatColor.GRAY + "" + ChatColor.BOLD + "Randomized BlockDrops", 
+							Lists.newArrayList(ChatColor.GRAY + "Every block type will", ChatColor.GRAY + "drop another block type!"), 
+							Settings.isRandomizedBlockDrops));
+					break;
+				case 12:
+					gui.setItem(i, createItem(Material.ORANGE_GLAZED_TERRACOTTA, 
+							ChatColor.GRAY + "" + ChatColor.BOLD + "Randomized MobDrops", 
+							Lists.newArrayList(ChatColor.GRAY + "Every mob type will", ChatColor.GRAY + "drop another item type!"),  
+							Settings.isRandomizedMobDrops));
+					break;
+				case 13:
+					gui.setItem(i, createItem(Material.PURPLE_GLAZED_TERRACOTTA, 
+							ChatColor.GRAY + "" + ChatColor.BOLD + "Randomized Crafting", 
+							Lists.newArrayList(ChatColor.GRAY + "Every crafting recipe", ChatColor.GRAY + "will be randomized!",
+									ChatColor.GRAY + "This also affects furnaces!"),
+							Settings.isRandomizedCrafting));
+					break;
 				default:
 					gui.setItem(i, createGlass());
 				}

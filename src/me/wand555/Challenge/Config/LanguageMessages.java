@@ -34,4 +34,8 @@ public abstract class LanguageMessages {
 	public String onlyForPlayers;
 	
 	protected abstract void loadMessagesWithLanguage();
+	
+	public static void prepareDefaultLangs() {
+		
+	}
 }

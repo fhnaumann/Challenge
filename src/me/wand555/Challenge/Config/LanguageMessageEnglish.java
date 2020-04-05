@@ -3,15 +3,14 @@ package me.wand555.Challenge.Config;
 import java.io.File;
 
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import me.wand555.Challenge.Challenge.Challenge;
 
 public class LanguageMessageEnglish extends LanguageMessages {
 
-	/*
 	private final File file = new File(PLUGIN.getDataFolder()+""+File.separatorChar+"Language"+File.separatorChar, 
 			Language.ENGLISH.getAbbreviation()+".yml");
-	*/
 	
 	public LanguageMessageEnglish() {
 		
@@ -19,6 +18,8 @@ public class LanguageMessageEnglish extends LanguageMessages {
 
 	@Override
 	protected void loadMessagesWithLanguage() {
+		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		
 		super.teleportMsg = Challenge.PREFIX + ChatColor.GRAY + "Teleported.";
 		super.alreadyInChallenge = Challenge.PREFIX + ChatColor.GRAY + "You're already in the challenge.";
 		super.notInChallenge = Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge.";

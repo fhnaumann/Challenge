@@ -1,15 +1,24 @@
 package me.wand555.Challenge.ChallengeData;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+
+import com.google.common.collect.Lists;
 
 import StartRunnables.SecondTimer;
 import StartRunnables.TimerMessage;
@@ -27,6 +36,11 @@ public class ChallengeProfile {
 	
 	private static int sharedHPWaitDamageRunnableID = 0;
 	private static int sharedHPWaitRegRunnableID = 0;
+	
+	private static HashMap<Material, Material> randomizeMapped = new HashMap<>();
+	//technically final
+	private static final Material[] NORMAL_MATERIALS = Material.values();
+	
 	/**
 	 * Is always null, unless a challenge has concluded (death) and the server hasn't restarted.
 	 */
@@ -53,6 +67,22 @@ public class ChallengeProfile {
 				//p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 				p.setHealthScale(p.getHealth());
 			});
+		}
+		
+		if(Settings.isRandomizedBlockDrops
+				|| Settings.isRandomizedMobDrops
+				|| Settings.isRandomizedCrafting) {
+			if(randomizeMapped == null || randomizeMapped.isEmpty()) {
+				randomizeMapped = Lists.newArrayList(NORMAL_MATERIALS).stream()
+						.filter(mat -> !mat.isAir())
+						.collect(Collectors.toMap(Function.identity(), 
+								mat -> NORMAL_MATERIALS[ThreadLocalRandom.current().nextInt(0, NORMAL_MATERIALS.length)], 
+								(v1, v2) -> v1, 
+								HashMap::new));
+			}						
+		}
+		else {
+			randomizeMapped.clear();
 		}
 	}
 	
@@ -192,5 +222,16 @@ public class ChallengeProfile {
 	 */
 	public static void setSecondTimer(SecondTimer secondTimer) {
 		ChallengeProfile.secondTimer = secondTimer;
+	}
+
+	/**
+	 * @return the randomizeMapped
+	 */
+	public static HashMap<Material, Material> getRandomizeMapped() {
+		return randomizeMapped;
+	}
+	
+	public static void setRandomizeMapped(HashMap<Material, Material> mapped) {
+		randomizeMapped = mapped;
 	}
 }

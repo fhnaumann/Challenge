@@ -5,6 +5,7 @@ import static me.wand555.Challenge.ChallengeData.Settings.*;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import StartRunnables.SecondTimer;
 import StartRunnables.TimerMessage;
 
 import org.bukkit.Axis;
+import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -110,8 +112,20 @@ public class ConfigHandler extends ConfigUtil {
 			noBlockPlace = cfg.getBoolean("noBlockPlace");
 			noBlockBreaking = cfg.getBoolean("noBlockBreaking");
 			noCrafting = cfg.getBoolean("noCrafting");
-			noSneaking = cfg.getBoolean("noSneaking");			
+			noSneaking = cfg.getBoolean("noSneaking");	
+			isRandomizedBlockDrops = cfg.getBoolean("randomizeBlockDrops");
+			isRandomizedMobDrops = cfg.getBoolean("randomizeMobDrops");
+			isRandomizedCrafting = cfg.getBoolean("randomizeCrafting");
 		}	
+		
+		if(isRandomizedBlockDrops || isRandomizedMobDrops || isRandomizedCrafting) {
+			ChallengeProfile.setRandomizeMapped(cfg.getStringList("randomizedDropsPattern").stream()
+					.collect(Collectors.toMap(
+							string -> Material.valueOf(((String) string).split(",")[0]), 
+							string -> Material.valueOf(((String) string).split(",")[1]), 
+							(v1, v2) -> v1, 
+							HashMap::new)));
+		}
 		
 		if(hasStarted) {
 			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, TimerMessage.TIMER_PAUSED.getMessage().replace("[TIME]", DateUtil.formatDuration(cfg.getLong("Timer")))));
@@ -141,10 +155,22 @@ public class ConfigHandler extends ConfigUtil {
 		cfg.set("noBlockBreaking", noBlockBreaking);
 		cfg.set("noCrafting", noCrafting);
 		cfg.set("noSneaking", noSneaking);
-		
+		cfg.set("randomizeBlockDrops", isRandomizedBlockDrops);
+		cfg.set("randomizeMobDrops", isRandomizedMobDrops);
+		cfg.set("randomizeCrafting", isRandomizedCrafting);
+		if(isRandomizedBlockDrops || isRandomizedMobDrops || isRandomizedCrafting) {
+			cfg.set("randomizedDropsPattern", 
+				ChallengeProfile.getRandomizeMapped().entrySet().stream()
+					.map(entry -> entry.getKey().toString() + "," + entry.getValue().toString())
+					.collect(Collectors.toList()));
+		}
+		else {
+			cfg.set("randomizedDropsPattern", null);
+		}
 		if(hasStarted) {
 			cfg.set("Timer", ChallengeProfile.getSecondTimer().getTime());
 		}
+		
 		saveCustomYml(cfg, file);
 	}
 	

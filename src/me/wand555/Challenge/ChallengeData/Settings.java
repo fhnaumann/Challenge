@@ -56,6 +56,15 @@ public class Settings {
 	public static boolean noSneaking = false;
 	public static void setNoSneaking() {noSneaking = !noSneaking;}
 	
+	public static boolean isRandomizedBlockDrops = false;
+	public static void setRandomizedBlockDrops() {isRandomizedBlockDrops = !isRandomizedBlockDrops;}
+	
+	public static boolean isRandomizedMobDrops = false;
+	public static void setRandomizedMobDrops() {isRandomizedMobDrops = !isRandomizedMobDrops;}
+	
+	public static boolean isRandomizedCrafting = false;
+	public static void setRandomizedCrafting() {isRandomizedCrafting = !isRandomizedCrafting;}
+	
 	public static void restoreDefault() {
 		hasStarted = false;
 		isPaused = false;
