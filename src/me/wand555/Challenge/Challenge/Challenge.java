@@ -16,6 +16,7 @@ import ChallengeListeners.NoDamageListener;
 import ChallengeListeners.NoRegenListener;
 import ChallengeListeners.NoSneakingListener;
 import ChallengeListeners.PlayerDeathListener;
+import ChallengeListeners.RandomizerListener;
 import ChallengeListeners.SharedHPPlayerChangeLifeListener;
 import ChallengeProfileListener.PlayerJoinListener;
 import ChallengeProfileListener.PlayerQuitListener;
@@ -105,6 +106,7 @@ public class Challenge extends JavaPlugin {
 		new NoBlockBreakingListener(this);
 		new NoCraftListener(this);
 		new NoSneakingListener(this);
+		new RandomizerListener(this);
 		
 		new PortalListener(this);
 		
