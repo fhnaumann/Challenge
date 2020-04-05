@@ -19,12 +19,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 
-import me.wand555.Challenge.Challenge.ChallengeProfile;
-import me.wand555.Challenge.Challenge.PositionManager;
-import me.wand555.Challenge.Challenge.WorldLinkManager;
-import me.wand555.Challenge.Challenge.EndLinking.EndHelper;
+import me.wand555.Challenge.ChallengeData.ChallengeProfile;
+import me.wand555.Challenge.ChallengeData.Position.PositionManager;
 import me.wand555.Challenge.Config.ConfigUtil;
-import me.wand555.Challenge.NetherLinking.Gate;
+import me.wand555.Challenge.WorldLinking.WorldLinkManager;
+import me.wand555.Challenge.WorldLinking.EndLinking.EndHelper;
+import me.wand555.Challenge.WorldLinking.NetherLinking.Gate;
 
 public class WorldUtil extends ConfigUtil {
 	
@@ -41,7 +41,7 @@ public class WorldUtil extends ConfigUtil {
 					.getSpawnLocation());
 			return;
 		}
-		boolean b = player.teleport(deserializeLocationDetailed(cfg.getString("Challenge.Location")));
+		player.teleport(deserializeLocationDetailed(cfg.getString("Challenge.Location")));
 		player.setGameMode(GameMode.valueOf(cfg.getString("Challenge.GameMode")));
 		player.setHealth(cfg.getDouble("Challenge.Health"));
 		player.setFoodLevel(cfg.getInt("Challenge.Hunger"));

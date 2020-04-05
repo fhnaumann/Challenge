@@ -11,10 +11,10 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="Listener"/>
-	<classpathentry kind="src" path="CustomEvents"/>
-	<classpathentry kind="src" path="Runnables"/>
-	<classpathentry kind="src" path="GUI"/>
+	<classpathentry kind="src" path="me.wand555.Challenge.Listener"/>
+	<classpathentry kind="src" path="me.wand555.Challenge.CustomEvents"/>
+	<classpathentry kind="src" path="me.wand555.Challenge.Runnables"/>
+	<classpathentry kind="src" path="me.wand555.Challenge.GUI"/>
 	<classpathentry kind="lib" path="D:/Minecraft Bukkit/Eclipse API Reference/ProtocolLib.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>

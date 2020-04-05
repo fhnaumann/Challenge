@@ -1,8 +1,5 @@
 package me.wand555.Challenge.Command;
 
-import org.bukkit.WorldCreator;
-
-
 import org.bukkit.attribute.Attribute;
 
 import java.util.Date;
@@ -18,12 +15,12 @@ import org.bukkit.entity.Player;
 import GUI.GUI;
 import GUIType.GUIType;
 import me.wand555.Challenge.Challenge.Challenge;
-import me.wand555.Challenge.Challenge.ChallengeProfile;
-import me.wand555.Challenge.Challenge.Position;
-import me.wand555.Challenge.Challenge.PositionManager;
-import me.wand555.Challenge.Challenge.Settings;
-import me.wand555.Challenge.Challenge.WorldLinkManager;
+import me.wand555.Challenge.ChallengeData.ChallengeProfile;
+import me.wand555.Challenge.ChallengeData.Settings;
+import me.wand555.Challenge.ChallengeData.Position.Position;
+import me.wand555.Challenge.ChallengeData.Position.PositionManager;
 import me.wand555.Challenge.Util.WorldUtil;
+import me.wand555.Challenge.WorldLinking.WorldLinkManager;
 
 public class CE implements CommandExecutor {
 
@@ -216,6 +213,19 @@ public class CE implements CommandExecutor {
 				}
 				else {
 					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /pos <name>");
+				}
+			}
+			else if(cmd.getName().equalsIgnoreCase("bp")) {
+				if(args.length == 0) {
+					if(WorldLinkManager.worlds.contains(p.getWorld())) {
+						gui.createGUI(p, GUIType.BACKPACK);
+					}
+					else {
+						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge.");
+					}
+				}
+				else {
+					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /bp");
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("settings")) {

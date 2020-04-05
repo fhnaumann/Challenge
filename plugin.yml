@@ -19,6 +19,9 @@ commands:
   pos:
     usage: /pos <name>
     description: Registers new pos with name and player postion.
+  bp:
+    usage: /bp
+    description: Opens up shared backpack.
   settings:
     usage: /settings
     description: Opens gui with settings.

@@ -1,12 +1,16 @@
 package me.wand555.Challenge.Config;
 
+import static me.wand555.Challenge.ChallengeData.Settings.*;
+
+
 import java.io.File;
-
-
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 import StartRunnables.SecondTimer;
 import StartRunnables.TimerMessage;
@@ -15,13 +19,13 @@ import org.bukkit.Axis;
 import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import me.wand555.Challenge.Challenge.ChallengeProfile;
-import me.wand555.Challenge.Challenge.Position;
-import me.wand555.Challenge.Challenge.PositionManager;
-import me.wand555.Challenge.Challenge.EndLinking.ObsidianPlatform;
-import me.wand555.Challenge.NetherLinking.Gate;
+import me.wand555.Challenge.ChallengeData.ChallengeProfile;
+import me.wand555.Challenge.ChallengeData.Backpack.BackPack;
+import me.wand555.Challenge.ChallengeData.Position.Position;
+import me.wand555.Challenge.ChallengeData.Position.PositionManager;
 import me.wand555.Challenge.Util.DateUtil;
-import static me.wand555.Challenge.Challenge.Settings.*;
+import me.wand555.Challenge.WorldLinking.EndLinking.ObsidianPlatform;
+import me.wand555.Challenge.WorldLinking.NetherLinking.Gate;
 
 public class ConfigHandler extends ConfigUtil {
 
@@ -30,6 +34,7 @@ public class ConfigHandler extends ConfigUtil {
 		storeEndPortalToConfig();
 		storeChallengeProfilesAndTimers();
 		storePositionsToConfig();
+		storeBackpackToConfig();
 	}
 	
 	public static void loadFromConfig() {
@@ -37,6 +42,24 @@ public class ConfigHandler extends ConfigUtil {
 		loadEndPortalFromConfig();
 		loadChallengeProfilesAndTimers();
 		loadPositionsFromConfig();
+		loadBackpackFromConfig();
+	}
+	
+	private static void loadBackpackFromConfig() {
+		checkOrdner();
+		File file = new File(PLUGIN.getDataFolder()+"", "backpack.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		List<?> list = cfg.getList("Content");
+		if(list == null) BackPack.setContents(new ItemStack[BackPack.BACKPACK_SIZE]);
+		else BackPack.setContents(list.toArray(new ItemStack[list.size()]));
+	}
+	
+	private static void storeBackpackToConfig() {
+		clearFile("backpack.yml");
+		File file = new File(PLUGIN.getDataFolder()+"", "backpack.yml");
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		cfg.set("Content", Arrays.asList(BackPack.getContents()));
+		saveCustomYml(cfg, file);
 	}
 	
 	private static void loadPositionsFromConfig() {

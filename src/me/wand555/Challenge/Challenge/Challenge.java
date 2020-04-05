@@ -21,12 +21,16 @@ import ChallengeProfileListener.PlayerJoinListener;
 import ChallengeProfileListener.PlayerQuitListener;
 import EnderDragonListener.EnderDragonDeathListener;
 import GUI.GUI;
+import GUIClickListener.BackpackListener;
 import GUIClickListener.ChallengeItemClickListener;
 import StartListeners.PlayerTeleportWorldListener;
+import me.wand555.Challenge.ChallengeData.ChallengeProfile;
+import me.wand555.Challenge.ChallengeData.Settings;
 import me.wand555.Challenge.Command.CE;
 import me.wand555.Challenge.Config.ConfigHandler;
-import me.wand555.Challenge.NetherLinking.PortalListener;
 import me.wand555.Challenge.Util.SignMenuFactory;
+import me.wand555.Challenge.WorldLinking.WorldLinkManager;
+import me.wand555.Challenge.WorldLinking.NetherLinking.PortalListener;
 
 public class Challenge extends JavaPlugin {
 
@@ -68,6 +72,7 @@ public class Challenge extends JavaPlugin {
 		this.getCommand("hp").setExecutor(myCE);
 		this.getCommand("settings").setExecutor(myCE);
 		this.getCommand("pos").setExecutor(myCE);
+		this.getCommand("bp").setExecutor(myCE);
 		
 		if(Settings.hasStarted) {
 			//ChallengeProfile.resumeTimer();
@@ -78,6 +83,11 @@ public class Challenge extends JavaPlugin {
 		if(!Settings.isPaused && Settings.hasStarted) {
 			ChallengeProfile.pauseTimerOnDisable();
 		}
+		
+		Bukkit.getOnlinePlayers().stream()
+			.filter(p -> WorldLinkManager.worlds.contains(p.getWorld()))
+			.forEach(p -> p.closeInventory());
+		
 		ConfigHandler.storeToConfig();
 	}
 	
@@ -86,6 +96,7 @@ public class Challenge extends JavaPlugin {
 		new EnderDragonDeathListener(this);
 		
 		new ChallengeItemClickListener(this, gui, signMenuFactory);
+		new BackpackListener(this);
 		new PlayerDeathListener(this);
 		new NoDamageListener(this);
 		new NoRegenListener(this);
