@@ -30,7 +30,7 @@ public class NoBlockPlaceListener implements Listener {
 						&& mat != Material.END_PORTAL_FRAME
 						&& !(mat == Material.FIRE 
 							&& event.getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN)) {
-					ChallengeProfile.endChallenge(ChallengeEndReason.NO_BLOCK_PLACE);
+					ChallengeProfile.endChallenge(event.getPlayer(), ChallengeEndReason.NO_BLOCK_PLACE);
 				}
 			}
 			else {

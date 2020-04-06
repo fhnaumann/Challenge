@@ -19,6 +19,8 @@ import me.wand555.Challenge.ChallengeData.ChallengeProfile;
 import me.wand555.Challenge.ChallengeData.Settings;
 import me.wand555.Challenge.ChallengeData.Position.Position;
 import me.wand555.Challenge.ChallengeData.Position.PositionManager;
+import me.wand555.Challenge.Config.Language.Language;
+import me.wand555.Challenge.Config.Language.LanguageMessages;
 import me.wand555.Challenge.Util.WorldUtil;
 import me.wand555.Challenge.WorldLinking.WorldLinkManager;
 
@@ -32,6 +34,7 @@ public class CE implements CommandExecutor {
 		this.gui = gui;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(sender instanceof Player) {
@@ -53,10 +56,10 @@ public class CE implements CommandExecutor {
 									//can actually be transfered to changeworldlistener
 									ChallengeProfile.addToParticipants(p.getUniqueId());
 									//p.teleport(WorldLinkManager.worlds.stream().filter(w -> w.getEnvironment() == Environment.NORMAL).findFirst().get().getSpawnLocation(), TeleportCause.PLUGIN);
-									p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Teleported.");
+									p.sendMessage(LanguageMessages.teleportMsg);
 								}
 								else {
-									p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're already in the challenge world.");
+									p.sendMessage(LanguageMessages.alreadyInChallenge);
 								}
 							}
 							else {
@@ -74,10 +77,10 @@ public class CE implements CommandExecutor {
 								WorldUtil.loadPlayerInformationBeforeChallengeAndApply(p);
 								ChallengeProfile.removeFromParticipants(p.getUniqueId());
 								//p.teleport(WorldLinkManager.worlds.stream().filter(w -> w.getEnvironment() == Environment.NORMAL).findFirst().get().getSpawnLocation(), TeleportCause.PLUGIN);
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Teleported.");
+								p.sendMessage(LanguageMessages.teleportMsg);
 							}
 							else {
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge.");
+								p.sendMessage(LanguageMessages.notInChallenge);
 							}
 						}
 						else {
@@ -110,11 +113,11 @@ public class CE implements CommandExecutor {
 								ChallengeProfile.onReset();
 								WorldLinkManager.worlds.clear();
 								
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Deleted challenge worlds.");
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Reload/Restart the server and type /challenge join to join a new challenge.");
+								p.sendMessage(LanguageMessages.deletedChallengeWorlds);
+								p.sendMessage(LanguageMessages.resetWarning);
 							}
 							else {
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You have to be in the challenge to reset it.");
+								p.sendMessage(LanguageMessages.notInChallenge);
 							}
 						}
 						else {
@@ -122,7 +125,7 @@ public class CE implements CommandExecutor {
 						}
 					}
 					else {
-						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /challenge <option>");
+						p.sendMessage(LanguageMessages.challengeOptionSyntax);
 					}
 				}
 				else {
@@ -138,11 +141,11 @@ public class CE implements CommandExecutor {
 									ChallengeProfile.startTimer();
 								}
 								else {
-									p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Timer is started. Use /timer pause to pause or resume the timer.");
+									p.sendMessage(LanguageMessages.timerAlreadyStarted);
 								}						
 							}
 							else {
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge world.");
+								p.sendMessage(LanguageMessages.notInChallenge);
 							}
 						}
 						else {
@@ -161,11 +164,11 @@ public class CE implements CommandExecutor {
 									ChallengeProfile.resumeTimer();
 								}
 								else {
-									p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Cannot pause. Challenge is not running.");
+									p.sendMessage(LanguageMessages.noPauseBecauseNotRunning);
 								}
 							}
 							else {
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge world.");
+								p.sendMessage(LanguageMessages.notInChallenge);
 							}
 						}
 						else {
@@ -173,11 +176,11 @@ public class CE implements CommandExecutor {
 						}
 					}
 					else {
-						p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /timer <option>");
+						p.sendMessage(LanguageMessages.timerOptionSyntax);
 					}
 				}
 				else {
-					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /timer <option>");
+					p.sendMessage(LanguageMessages.timerOptionSyntax);
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("hp")) {
@@ -188,14 +191,14 @@ public class CE implements CommandExecutor {
 							int amount = Integer.valueOf(args[0]);
 							if(amount >= 0 && amount <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()) {
 								p.setHealth(amount);
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Set HP.");
+								p.sendMessage(LanguageMessages.setHP);
 							}
 							else {
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Amount has to be 0 <= amount < MAX_HEALTH.");
+								p.sendMessage(LanguageMessages.setHPOutOfRange);
 							}
 						}
 						else {
-							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "'" + ChatColor.GREEN + args[1] + ChatColor.GRAY + "' is not a number.");
+							p.sendMessage(LanguageMessages.notANumber.replace("[NUMBER]", args[0]));
 						}
 					}
 					else {
@@ -211,19 +214,19 @@ public class CE implements CommandExecutor {
 								Player playerTo = Bukkit.getPlayer(args[0]);
 								if(playerTo != null) {
 									playerTo.setHealth(amount);
-									p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Set HP.");
+									p.sendMessage(LanguageMessages.setHP);
 								}
 								else {
-									p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "The player '" + ChatColor.GREEN + args[0] + ChatColor.GRAY + "' is not online.");
+									p.sendMessage(LanguageMessages.playerNotOnline.replace("[PLAYER]", Bukkit.getOfflinePlayer(args[0]).getName()));
 								}
 								
 							}
 							else {
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Amount has to be 0 <= amount < MAX_HEALTH.");
+								p.sendMessage(LanguageMessages.setHPOutOfRange);
 							}
 						}
 						else {
-							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + ChatColor.GREEN + "'" + args[1] + ChatColor.GRAY + "' is not a number.");
+							p.sendMessage(LanguageMessages.notANumber.replace("[NUMBER]", args[0]));
 						}
 					}
 					else {
@@ -231,7 +234,7 @@ public class CE implements CommandExecutor {
 					}
 				}
 				else {
-					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /hp <player> <amount>");
+					p.sendMessage(LanguageMessages.hpOptionSyntax);
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("pos")) {
@@ -253,7 +256,7 @@ public class CE implements CommandExecutor {
 						}
 						else {
 							PositionManager.addToPosition(new Position(args[0], p.getLocation(), p.getUniqueId(), new Date()));
-							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Registered position " + ChatColor.GREEN + args[0]);
+							p.sendMessage(LanguageMessages.registeredPosition.replace("[POS]", args[0]));
 						}		
 					}
 					else {
@@ -261,7 +264,7 @@ public class CE implements CommandExecutor {
 					}
 				}
 				else {
-					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /pos <name>");
+					p.sendMessage(LanguageMessages.positionSyntax);
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("bp")) {
@@ -271,7 +274,7 @@ public class CE implements CommandExecutor {
 							gui.createGUI(p, GUIType.BACKPACK);
 						}
 						else {
-							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge.");
+							p.sendMessage(LanguageMessages.notInChallenge);
 						}
 					}
 					else {
@@ -279,7 +282,7 @@ public class CE implements CommandExecutor {
 					}
 				}
 				else {
-					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /bp");
+					p.sendMessage(LanguageMessages.bpSyntax);
 				}
 			}
 			else if(cmd.getName().equalsIgnoreCase("settings")) {
@@ -290,11 +293,11 @@ public class CE implements CommandExecutor {
 								gui.createGUI(p, GUIType.OVERVIEW);
 							}
 							else {
-								p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Timer has to be paused. /timer pause");
+								p.sendMessage(LanguageMessages.noSettingsHasToBePaused);
 							}				
 						}
 						else {
-							p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "You're not in a challenge world.");
+							p.sendMessage(LanguageMessages.notInChallenge);
 						}
 					}
 					else {
@@ -302,7 +305,7 @@ public class CE implements CommandExecutor {
 					}
 				}
 				else {
-					p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Syntax: /settings");
+					p.sendMessage(LanguageMessages.settingSyntax);
 				}
 			}
 		}

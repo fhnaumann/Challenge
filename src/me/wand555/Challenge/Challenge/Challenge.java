@@ -2,6 +2,7 @@ package me.wand555.Challenge.Challenge;
 
 import java.util.Random;
 
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.WorldCreator;
@@ -28,7 +29,10 @@ import StartListeners.PlayerTeleportWorldListener;
 import me.wand555.Challenge.ChallengeData.ChallengeProfile;
 import me.wand555.Challenge.ChallengeData.Settings;
 import me.wand555.Challenge.Command.CE;
-import me.wand555.Challenge.Config.ConfigHandler;
+import me.wand555.Challenge.Config.UserConfig;
+import me.wand555.Challenge.Config.Language.ConfigHandler;
+import me.wand555.Challenge.Config.Language.Language;
+import me.wand555.Challenge.Config.Language.LanguageMessages;
 import me.wand555.Challenge.Util.SignMenuFactory;
 import me.wand555.Challenge.WorldLinking.WorldLinkManager;
 import me.wand555.Challenge.WorldLinking.NetherLinking.PortalListener;
@@ -45,7 +49,7 @@ public class Challenge extends JavaPlugin {
 	
 	public void onEnable() {
 		plugin = this;
-		
+		UserConfig.placeLanguages();
 		WorldLinkManager.worlds.add(Bukkit.createWorld(new WorldCreator("ChallengeOverworld").environment(Environment.NORMAL)));
 		WorldLinkManager.worlds.add(Bukkit.createWorld(new WorldCreator("ChallengeNether").environment(Environment.NETHER)));
 		WorldLinkManager.worlds.add(Bukkit.createWorld(new WorldCreator("ChallengeEnd").environment(Environment.THE_END)));
@@ -55,7 +59,12 @@ public class Challenge extends JavaPlugin {
 		
 		ConfigHandler.loadFromConfig();
 		
-		
+		UserConfig.setUpDefaultConfig();
+		UserConfig.placeLanguages();
+		String lang = this.getConfig().getString("Language");
+		if(lang.equalsIgnoreCase("en")) LanguageMessages.loadLang(Language.ENGLISH);
+		else if(lang.equalsIgnoreCase("de")) LanguageMessages.loadLang(Language.GERMAN);
+		else LanguageMessages.loadLang(Language.ENGLISH);
 		
 		registerListener();
 		

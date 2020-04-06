@@ -1,0 +1,17 @@
+teleportMsg: &7&lTeleported.
+alreadyInChallenge: Challenge.PREFIX + ChatColor.GRAY + You're already in the challenge.
+notInChallenge: Challenge.PREFIX + ChatColor.GRAY + You're not in a challenge.
+deletedChallengeWorlds: Challenge.PREFIX + ChatColor.GRAY + Deleted challenge worlds.
+resetWarning: Challenge.PREFIX + ChatColor.GRAY + Reload/Restart the server and type /challenge join to join a new challenge.
+noChallengeToReset: Challenge.PREFIX + ChatColor.GRAY + You have to be in the challenge to reset it.
+timerAlreadyStarted: Challenge.PREFIX + ChatColor.GRAY + Timer is started. Use /timer pause to pause or resume the timer.
+noPauseBecauseNotRunning: Challenge.PREFIX + ChatColor.GRAY + Cannot pause. Challenge is not running.
+noSettingsHasToBePaused: Challenge.PREFIX + ChatColor.GRAY + Timer has to be paused. /timer pause
+setHP: Challenge.PREFIX + ChatColor.GRAY + Set HP.
+setHPOutOfRange: Challenge.PREFIX + ChatColor.GRAY + Amount has to be 0 <= amount < MAX_HEALTH.
+notANumber: Challenge.PREFIX + ChatColor.GRAY + ' + ChatColor.GREEN + [NUMBER] + ChatColor.GRAY + ' is not a number.
+playerNotOnline: Challenge.PREFIX + ChatColor.GRAY + The player ' + ChatColor.GREEN + [PLAYER] + ChatColor.GRAY + ' is not online.
+registeredPosition: Challenge.PREFIX + ChatColor.GRAY + Registered position  + ChatColor.GREEN + [POS]
+timerMessageStart: ChatColor.GRAY +  + ChatColor.BOLD + /timer start
+timerMessagePause: ChatColor.GRAY + "" + ChatColor.BOLD + "PAUSED" + ChatColor.DARK_GREEN +" [TIME] " + ChatColor.GRAY + "- /timer pause"
+timerMessageFinished: ChatColor.GRAY + "" + ChatColor.BOLD + "Final Time: " + ChatColor.DARK_GREEN + " [TIME] " + ChatColor.GRAY + " - /challenge reset or /challenge restore"

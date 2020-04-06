@@ -1,4 +1,4 @@
-package me.wand555.Challenge.Config;
+package me.wand555.Challenge.Config.Language;
 
 public enum Language {
 ENGLISH("en"),
@@ -14,4 +14,5 @@ GERMAN("de")
 	public String getAbbreviation() {
 		return this.abrv; 
 	}
+	
 }

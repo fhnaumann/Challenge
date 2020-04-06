@@ -23,7 +23,7 @@ public class EnderDragonDeathListener implements Listener {
 	public void onEnderDragonDeathEvent(EntityDeathEvent event) {
 		if(event.getEntityType() == EntityType.ENDER_DRAGON) {
 			if(WorldLinkManager.worlds.contains(event.getEntity().getWorld())) {
-				ChallengeProfile.endChallenge(ChallengeEndReason.FINISHED);
+				ChallengeProfile.endChallenge(event.getEntity().getKiller(), ChallengeEndReason.FINISHED);
 			}
 		}
 	}

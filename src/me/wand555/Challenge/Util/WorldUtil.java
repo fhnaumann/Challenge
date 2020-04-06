@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.wand555.Challenge.ChallengeData.ChallengeProfile;
 import me.wand555.Challenge.ChallengeData.Position.PositionManager;
-import me.wand555.Challenge.Config.ConfigUtil;
+import me.wand555.Challenge.Config.Language.ConfigUtil;
 import me.wand555.Challenge.WorldLinking.WorldLinkManager;
 import me.wand555.Challenge.WorldLinking.EndLinking.EndHelper;
 import me.wand555.Challenge.WorldLinking.NetherLinking.Gate;

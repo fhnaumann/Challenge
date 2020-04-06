@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.wand555.Challenge.Challenge.Challenge;
+import me.wand555.Challenge.Config.Language.LanguageMessages;
 import me.wand555.Challenge.Util.DateUtil;
 import me.wand555.Challenge.WorldLinking.WorldLinkManager;
 import net.md_5.bungee.api.ChatColor;
@@ -14,7 +15,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class SecondTimer extends BukkitRunnable {
-	private String msg;
+	private TimerMessage messageType;
 	private long time;
 	private boolean increaseTime;
 	
@@ -25,8 +26,8 @@ public class SecondTimer extends BukkitRunnable {
 		this.runTaskTimer(plugin, 0, 20L);
 	}
 	
-	public SecondTimer(Challenge plugin, String msg) {
-		this.msg = msg;
+	public SecondTimer(Challenge plugin, TimerMessage messageType) {
+		this.messageType = messageType;
 		this.increaseTime = false;
 		this.runTaskTimer(plugin, 0, 20L);
 	}
@@ -46,10 +47,33 @@ public class SecondTimer extends BukkitRunnable {
 			.forEach(p -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, component)); 
 		}
 		else {
-			TextComponent component = new TextComponent(msg);
-			Bukkit.getOnlinePlayers().stream()
-			.filter(p -> WorldLinkManager.worlds.contains(p.getWorld()))
-			.forEach(p -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, component));
+			switch(messageType) {
+			case START_TIMER:
+				TextComponent component = new TextComponent(LanguageMessages.timerMessageStart);	
+				Bukkit.getOnlinePlayers().stream()
+				.filter(p -> WorldLinkManager.worlds.contains(p.getWorld()))
+				.forEach(p -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, component));
+				break;
+			case TIMER_PAUSED:
+				TextComponent component1 = new TextComponent(LanguageMessages.timerMessagePause
+						.replace("[TIME]", DateUtil.formatDuration(getTime())));
+				Bukkit.getOnlinePlayers().stream()
+				.filter(p -> WorldLinkManager.worlds.contains(p.getWorld()))
+				.forEach(p -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, component1));
+				break;
+			case TIMER_FINISHED:
+				TextComponent component2 = new TextComponent(LanguageMessages.timerMessageFinished
+						.replace("[TIME]", DateUtil.formatDuration(getTime())));
+				Bukkit.getOnlinePlayers().stream()
+				.filter(p -> WorldLinkManager.worlds.contains(p.getWorld()))
+				.forEach(p -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, component2));
+				break;
+			default:
+				break;
+			
+			}
+			
+			
 		}				
 	}
 
@@ -69,11 +93,11 @@ public class SecondTimer extends BukkitRunnable {
 		this.increaseTime = false;
 	}
 	
-	public String getMessage() {
-		return this.msg;
+	public TimerMessage getMessageType() {
+		return this.messageType;
 	}
 	
-	public void setMessage(String message) {
-		this.msg = message;
+	public void setMessageType(TimerMessage messageType) {
+		this.messageType = messageType;
 	}
 }

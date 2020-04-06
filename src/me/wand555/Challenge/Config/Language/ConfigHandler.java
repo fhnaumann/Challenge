@@ -1,4 +1,4 @@
-package me.wand555.Challenge.Config;
+package me.wand555.Challenge.Config.Language;
 
 import static me.wand555.Challenge.ChallengeData.Settings.*;
 
@@ -128,11 +128,11 @@ public class ConfigHandler extends ConfigUtil {
 		}
 		
 		if(hasStarted) {
-			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, TimerMessage.TIMER_PAUSED.getMessage().replace("[TIME]", DateUtil.formatDuration(cfg.getLong("Timer")))));
+			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, TimerMessage.TIMER_PAUSED));
 			ChallengeProfile.getSecondTimer().setTime(cfg.getLong("Timer"));
 		}
 		else {
-			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, TimerMessage.START_TIMER.getMessage()));
+			ChallengeProfile.setSecondTimer(new SecondTimer(PLUGIN, TimerMessage.START_TIMER));
 		}
 	}
 	

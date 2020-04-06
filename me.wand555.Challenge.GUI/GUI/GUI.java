@@ -25,6 +25,7 @@ import java.util.Arrays;
 import me.wand555.Challenge.Challenge.Challenge;
 import me.wand555.Challenge.ChallengeData.Settings;
 import me.wand555.Challenge.ChallengeData.Backpack.BackPack;
+import me.wand555.Challenge.Config.Language.LanguageMessages;
 
 public class GUI {
 	
@@ -41,47 +42,47 @@ public class GUI {
 			for(int i=0; i<gui.getSize(); i++) {
 				switch(i) {
 				case 0:
-					gui.setItem(i, createItem(Material.PLAYER_HEAD, ChatColor.GRAY + "" + ChatColor.BOLD + "Death", 
+					gui.setItem(i, createItem(Material.PLAYER_HEAD, LanguageMessages.guiDeathName, 
 							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "The challenge is over when someone dies!")), 
 							Settings.endOnDeath));
 					break;
 				case 1:
-					gui.setItem(i, createItem(Material.BLAZE_ROD, ChatColor.GRAY + "" + ChatColor.BOLD + "Guarantee Fortress Spawn", 
+					gui.setItem(i, createItem(Material.BLAZE_ROD, LanguageMessages.guiFortressSpawnName, 
 							Lists.newArrayList(ChatColor.GRAY + "Guarantees a portal spawn", 
 									ChatColor.GRAY + "near/inside a fortress!", 
 									ChatColor.GRAY + "Might lag the server for the first teleportation!"), 
 							Settings.spawnNearFortress));
 					break;
 				case 2:
-					gui.setItem(i, createItem(Material.WITHER_ROSE, ChatColor.GRAY + "" + ChatColor.BOLD + "No Damage", 
+					gui.setItem(i, createItem(Material.WITHER_ROSE, LanguageMessages.guiNoDamageName, 
 							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "No one is allowed to", 
 									ChatColor.GRAY + "take damage!")), 
 							Settings.noDamage));
 					break;
 				case 3:
-					gui.setItem(i, createPotionItem(Material.POTION, PotionType.REGEN, ChatColor.GRAY + "" + ChatColor.BOLD + "No Regeneration", 
+					gui.setItem(i, createPotionItem(Material.POTION, PotionType.REGEN, LanguageMessages.guiNoRegName, 
 							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "No one regenerates health regularly!")), 
 							Settings.noReg));
 					break;
 				case 4:
-					gui.setItem(i, createPotionItem(Material.POTION, PotionType.REGEN, ChatColor.GRAY + "" + ChatColor.BOLD + "No Regeneration", 
+					gui.setItem(i, createPotionItem(Material.POTION, PotionType.REGEN, LanguageMessages.guiNoRegHardName, 
 							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "No one regenerates health at all!", 
 									ChatColor.GRAY + "Overrides \"No Regeneration\"")), 
 							Settings.noRegHard));
 					break;
 				case 5:
-					gui.setItem(i, createItemHealthLore(Material.COMMAND_BLOCK, ChatColor.GRAY + "" + ChatColor.BOLD + "Custom Health", 
+					gui.setItem(i, createItemHealthLore(Material.COMMAND_BLOCK, LanguageMessages.guiCustomHealthName, 
 							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "Set the max. health for all players!", 
 									ChatColor.GRAY + "1 Heart = 2HP")), 
 							Settings.isCustomHealth));
 					break;
 				case 6:
-					gui.setItem(i, createItem(Material.GHAST_TEAR, ChatColor.GRAY + "" + ChatColor.BOLD + "Shared Health", 
+					gui.setItem(i, createItem(Material.GHAST_TEAR, LanguageMessages.guiSharedHealthName, 
 							new ArrayList<String>(Arrays.asList(ChatColor.GRAY + "Health will be shared across all players!")), 
 							Settings.isSharedHealth));
 					break;
 				case 7:
-					gui.setItem(i, createItem(Material.GRASS_BLOCK, ChatColor.GRAY + "" + ChatColor.BOLD + "No Block Placing", 
+					gui.setItem(i, createItem(Material.GRASS_BLOCK, LanguageMessages.guiNoPlacingName, 
 							Lists.newArrayList(ChatColor.GRAY + "Block placing is forbidden!", 
 									ChatColor.GRAY + "Exception:", 
 									ChatColor.GRAY + "Ender eyes", 
@@ -91,33 +92,33 @@ public class GUI {
 							Settings.noBlockPlace));
 					break;
 				case 8:
-					gui.setItem(i, createItem(Material.STONE, ChatColor.GRAY + "" + ChatColor.BOLD + "No Block Breaking", 
+					gui.setItem(i, createItem(Material.STONE, LanguageMessages.guiNoBreakingName, 
 							Lists.newArrayList(ChatColor.GRAY + "Block breaking is forbidden!"), Settings.noBlockBreaking));
 					break;
 				case 9:
-					gui.setItem(i, createItem(Material.CRAFTING_TABLE, ChatColor.GRAY + "" + ChatColor.BOLD + "No Crafting", 
+					gui.setItem(i, createItem(Material.CRAFTING_TABLE, LanguageMessages.guiNoCraftingName, 
 							Lists.newArrayList(ChatColor.GRAY + "Crafting is forbidden"), 
 							Settings.noCrafting));
 					break;
 				case 10:
-					gui.setItem(i, createItem(Material.STONE_PRESSURE_PLATE, ChatColor.GRAY + "" + ChatColor.BOLD + "No Sneaking", 
+					gui.setItem(i, createItem(Material.STONE_PRESSURE_PLATE, LanguageMessages.guiNoSneakingName, 
 							Lists.newArrayList(ChatColor.GRAY + "Sneaking is forbidden"), Settings.noSneaking));
 					break;
 				case 11:
 					gui.setItem(i, createItem(Material.WHITE_GLAZED_TERRACOTTA, 
-							ChatColor.GRAY + "" + ChatColor.BOLD + "Randomized BlockDrops", 
+							LanguageMessages.guiRandomBlockDropsName, 
 							Lists.newArrayList(ChatColor.GRAY + "Every block type will", ChatColor.GRAY + "drop another block type!"), 
 							Settings.isRandomizedBlockDrops));
 					break;
 				case 12:
 					gui.setItem(i, createItem(Material.ORANGE_GLAZED_TERRACOTTA, 
-							ChatColor.GRAY + "" + ChatColor.BOLD + "Randomized MobDrops", 
+							LanguageMessages.guiRandomMobDropsName, 
 							Lists.newArrayList(ChatColor.GRAY + "Every mob type will", ChatColor.GRAY + "drop another item type!"),  
 							Settings.isRandomizedMobDrops));
 					break;
 				case 13:
 					gui.setItem(i, createItem(Material.PURPLE_GLAZED_TERRACOTTA, 
-							ChatColor.GRAY + "" + ChatColor.BOLD + "Randomized Crafting", 
+							LanguageMessages.guiRandomCraftingName, 
 							Lists.newArrayList(ChatColor.GRAY + "Every crafting recipe", ChatColor.GRAY + "will be randomized!",
 									ChatColor.GRAY + "This also affects furnaces!"),
 							Settings.isRandomizedCrafting));

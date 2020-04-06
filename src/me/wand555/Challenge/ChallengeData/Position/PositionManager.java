@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
+import me.wand555.Challenge.Config.Language.LanguageMessages;
+
 public class PositionManager {
 
 	public static HashSet<Position> positions = new HashSet<Position>();
@@ -17,10 +19,13 @@ public class PositionManager {
 	}
 	
 	public static String displayPosition(Position pos) {
-		return "Position: " + ChatColor.GREEN + pos.getName() + ChatColor.GRAY +" at " + ChatColor.GREEN 
-				+ displayLocation(pos.getLocation()) + ChatColor.GRAY + " (" + ChatColor.GREEN
-				+ pos.getDate() + ChatColor.GRAY + " by " + ChatColor.GREEN + Bukkit.getOfflinePlayer(pos.getCreator()).getName()
-				+ ChatColor.GRAY + ")";
+		Location loc = pos.getLocation();
+		return LanguageMessages.returnPosition
+				.replace("[X]", String.valueOf(loc.getBlockX()))
+				.replace("[Y]", String.valueOf(loc.getBlockY()))
+				.replace("[Z]", String.valueOf(loc.getBlockZ()))
+				.replace("[POSNAME]", pos.getName())
+				.replace("[WORLD]", loc.getWorld().getName());
 	}
 	
 	public static boolean positionWithNameExists(String name) {

@@ -22,7 +22,7 @@ public class NoBlockBreakingListener implements Listener {
 	public void onBlockbreakEvent(BlockBreakEvent event) {
 		if(Settings.noBlockBreaking) {
 			if(Settings.canTakeEffect()) {
-				ChallengeProfile.endChallenge(ChallengeEndReason.NO_BLOCK_BREAK);
+				ChallengeProfile.endChallenge(event.getPlayer(), ChallengeEndReason.NO_BLOCK_BREAK);
 			}
 			else {
 				event.setCancelled(true);

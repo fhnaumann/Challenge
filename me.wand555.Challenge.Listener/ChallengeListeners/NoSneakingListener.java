@@ -23,7 +23,7 @@ public class NoSneakingListener implements Listener {
 	public void onSneakingEvent(PlayerToggleSneakEvent event) {
 		if(Settings.noSneaking) {
 			if(Settings.canTakeEffect()) {
-				ChallengeProfile.endChallenge(ChallengeEndReason.NO_SNEAKING);
+				ChallengeProfile.endChallenge(event.getPlayer(), ChallengeEndReason.NO_SNEAKING);
 			}
 		}
 	}

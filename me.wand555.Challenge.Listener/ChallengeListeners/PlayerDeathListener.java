@@ -27,7 +27,7 @@ public class PlayerDeathListener implements Listener {
 	public void onPlayerDeathEvent(PlayerDeathEvent event) {
 		if(Settings.endOnDeath) {
 			if(Settings.canTakeEffect()) {
-				ChallengeProfile.endChallenge(ChallengeEndReason.NATURAL_DEATH);
+				ChallengeProfile.endChallenge(event.getEntity(), ChallengeEndReason.NATURAL_DEATH);
 			}
 		}
 	}
@@ -35,10 +35,28 @@ public class PlayerDeathListener implements Listener {
 	@EventHandler
 	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
 		if(WorldLinkManager.worlds.contains(event.getPlayer().getLocation().getWorld())) {
-			event.setRespawnLocation(WorldLinkManager.worlds.stream()
-					.filter(w -> w.getEnvironment() == Environment.NORMAL)
-					.findFirst().get()
-					.getSpawnLocation());
+			if(event.isBedSpawn()) {
+				if(event.getRespawnLocation() != null) {
+					if(!WorldLinkManager.worlds.contains(event.getRespawnLocation().getWorld())) {
+						event.setRespawnLocation(WorldLinkManager.worlds.stream()
+								.filter(w -> w.getEnvironment() == Environment.NORMAL)
+								.findFirst().get()
+								.getSpawnLocation());
+					}
+				}
+				else {
+					event.setRespawnLocation(WorldLinkManager.worlds.stream()
+							.filter(w -> w.getEnvironment() == Environment.NORMAL)
+							.findFirst().get()
+							.getSpawnLocation());
+				}
+			}
+			else {
+				event.setRespawnLocation(WorldLinkManager.worlds.stream()
+						.filter(w -> w.getEnvironment() == Environment.NORMAL)
+						.findFirst().get()
+						.getSpawnLocation());
+			}
 		}
 	}
 }

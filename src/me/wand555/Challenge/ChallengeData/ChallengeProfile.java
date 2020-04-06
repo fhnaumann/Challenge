@@ -24,6 +24,7 @@ import StartRunnables.SecondTimer;
 import StartRunnables.TimerMessage;
 import me.wand555.Challenge.Challenge.Challenge;
 import me.wand555.Challenge.ChallengeData.Restore.RestoreChallenge;
+import me.wand555.Challenge.Config.Language.LanguageMessages;
 import me.wand555.Challenge.Util.DateUtil;
 
 public class ChallengeProfile {
@@ -56,7 +57,7 @@ public class ChallengeProfile {
 				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 				p.setHealthScale(p.getHealth());
 				p.setFoodLevel(15);
-				p.getInventory().clear();
+				//p.getInventory().clear();
 			});
 		}
 		else {
@@ -120,7 +121,7 @@ public class ChallengeProfile {
 	
 	public static void pauseTimer() {
 		ChallengeProfile.getSecondTimer().stopIncreasing();
-		ChallengeProfile.getSecondTimer().setMessage(TimerMessage.TIMER_PAUSED.getMessage().replace("[TIME]", DateUtil.formatDuration(ChallengeProfile.getSecondTimer().getTime())));
+		ChallengeProfile.getSecondTimer().setMessageType(TimerMessage.TIMER_PAUSED);
 		Settings.setPaused();
 	}
 	
@@ -137,18 +138,45 @@ public class ChallengeProfile {
 	
 	
 	
-	public static void endChallenge(ChallengeEndReason reason) {
+	public static void endChallenge(Player causer, ChallengeEndReason reason) {
 		HashSet<Player> players = fromUUIDToPlayer();
 		restoreChallenge = new RestoreChallenge(players, secondTimer.getTime());
-		//secondTimer.cancel();
 		Settings.setDone();
 		ChallengeProfile.getSecondTimer().stopIncreasing();
-		ChallengeProfile.getSecondTimer().setMessage(TimerMessage.TIMER_FINISHED.getMessage().replace("[TIME]", DateUtil.formatDuration(secondTimer.getTime())));
-		players.stream().forEach(p -> {
-			p.sendMessage(reason.getMessage());
+		ChallengeProfile.getSecondTimer().setMessageType(TimerMessage.TIMER_FINISHED);
+		String reasonMessage = "";
+		switch(reason) {
+		case FINISHED:
+			reasonMessage = LanguageMessages.endChallengeComplete.replace("[TIME]", DateUtil.formatDuration(secondTimer.getTime()));
+			break;
+		case NATURAL_DEATH:
+			reasonMessage = LanguageMessages.endChallengeNaturalDeath.replace("[PLAYER]", causer.getName());
+			break;
+		case NO_BLOCK_BREAK:
+			reasonMessage = LanguageMessages.endChallengeNoBreak.replace("[PLAYER]", causer.getName());
+			break;
+		case NO_BLOCK_PLACE:
+			reasonMessage = LanguageMessages.endChallengeNoPlace.replace("[PLAYER]", causer.getName());
+			break;
+		case NO_CRAFTING:
+			reasonMessage = LanguageMessages.endChallengeNoCrafting.replace("[PLAYER]", causer.getName());
+			break;
+		case NO_DAMAGE:
+			reasonMessage = LanguageMessages.endChallengeNoDamage.replace("[PLAYER]", causer.getName());
+			break;
+		case NO_SNEAKING:
+			reasonMessage = LanguageMessages.endChallengeNoSneaking.replace("[PLAYER]", causer.getName());
+			break;
+		default:
+			break;
+		
+		}
+		
+		for(Player p : players) {
+			p.sendMessage(reasonMessage);
 			p.setGameMode(GameMode.SPECTATOR);
 			p.sendMessage(Challenge.PREFIX + ChatColor.GRAY + "Type /challenge reset to reset the challenge.");
-		});
+		}
 	}
 	
 	public static SecondTimer getSecondTimer() {

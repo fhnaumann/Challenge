@@ -1,4 +1,4 @@
-package me.wand555.Challenge.Config;
+package me.wand555.Challenge.Config.Language;
 
 import java.io.File;
 
@@ -78,6 +78,18 @@ public class ConfigUtil {
 		   if(!file.exists()) {
 			   file.mkdir();
 		   }
+	}
+	
+	protected static void checkLangOrdner(String lang) {
+		File file = new File(PLUGIN.getDataFolder()+""+File.separatorChar+"Language", 
+				 lang+".yml");
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 		
 	protected static void clearFile(String fileName) {
